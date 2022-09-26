@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Categoria(models.Model):
+    id=models.AutoField(primary_key=True)
     nombre=models.CharField(max_length=50)
     created=models.DateField(auto_now_add=True)
     updated=models.DateField(auto_now_add=True)
@@ -11,14 +12,16 @@ class Categoria(models.Model):
     class Meta:
         verbose_name='categoria'
         verbose_name_plural='categorias'
+        ordering=['nombre']
     #para que nos devuelta el titulo del servicio
     #creacion de un self
     def __str__(self):
         return self.nombre
 
 class Post(models.Model):
+    id=models.AutoField(primary_key=True)
     titulo=models.CharField(max_length=50)
-    Contenido=models.CharField(max_length=50)
+    Contenido=models.CharField(max_length=100)
     imagen = models.ImageField(upload_to='blog',null=True,blank=True)
     autor=models.ForeignKey(User, on_delete=models.CASCADE)
     categorias=models.ManyToManyField(Categoria)
@@ -28,6 +31,7 @@ class Post(models.Model):
     class Meta:
         verbose_name='post'
         verbose_name_plural='posts'
+        ordering=['titulo']
     #para que nos devuelta el titulo del servicio
     #creacion de un self
     def __str__(self):
